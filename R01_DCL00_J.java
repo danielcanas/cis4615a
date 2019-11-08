@@ -3,7 +3,8 @@
  *  Execution:    java R01_DCL00_J
  *
  *
- *  Creates two non-complient classes. The non-complient solution
+ *  Creates 4 classes, two complient and two non-complient. When values are printed
+ *  the complient solution prints out the intended results. The non-complient solution
  *  prints out an unexpected result.
  *
  ******************************************************************************/
@@ -24,13 +25,35 @@ class B_NON_COMPLIENT {
   // ...
 }
 
+// The following two classses are compleient (Dependencies are removed)
+
+class A_COMPLIENT {
+  public static final int a = 2;
+  // ...
+}
+ 
+class B_COMPLIENT {
+  public static final int b = A_COMPLIENT.a + 1;
+  // ...
+}
+
+/* 
+Rule 01. Declarations and Initialization (DCL)
+Corrected code per:
+https://wiki.sei.cmu.edu/confluence/display/java/DCL00-J.+Prevent+class+initialization+cycles
+Rule 01-DCL00
+*/
+
 public class R01_DCL00_J {
 
     public static void main(String[] args) {
       B_NON_COMPLIENT test =  new B_NON_COMPLIENT();
+      B_COMPLIENT test2  = new B_COMPLIENT();
 
       // Prints the wrong value
       System.out.println(test.b);
+      // Prints the correct value
+      System.out.println(test2.b);
     }
 
 }
